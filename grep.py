@@ -4,35 +4,7 @@ import sys
 import os
 import flags as fg
 
-#checks for windows system
-if (os.name == 'nt'):
-	from colorama import init
-	init()
-
-from termcolor import colored
-
-
-blockFlag = ''		#If a result blocks is a:	-f phrase	-p paragraph			Default: everything
-infoFlag = ''		#Additional info:			-l line		-w words				Default: no info
-readFlag = ''		#How to read input:			-F file		-S stdin after EOF		Default: stdin, each line
-
-fg.argv = sys.argv[2:]
-blockFlag = fg.getFlags('-f','-p')
-infoFlag = fg.getFlags('-l','-w')
-readFlag = fg.getFlags('-F','-S')
-
-filePaths = fg.getFiles()
-
-printEnd=''
-
-match = sys.argv[1] if (len(sys.argv) >= 2) else ''
-
-blockMatch = r'(.|\n)*' + match + r'(.|\n)*'						#matches all text with the match
-
-if (blockFlag == '-f'):
-	blockMatch = r'(^|[^\.:]*)' + match + r'( [^\.:]*[\.:]|\.|:)'	#matches all phrases with match
-elif(blockFlag == '-p'):
-	blockMatch = r'[^\n]*' + match + r'[^\n]*'						#matches all paragraphs with match
+# Functions ##############################################################################################################################################
 
 #Prints colored text
 def printC(line,color, end=''):
@@ -50,10 +22,46 @@ def grep(data):
 		for result in re.finditer(match, block):
 			start = result.start()
 			end = result.end()
-			print(block[overture:start],end=printEnd)
+			if(block[overture] == ' '): #Removes initial space if it has one (looks better when printed)
+				overture += 1
+			print(block[overture:start],end='')
 			printC(block[start:end],'red')
 			overture = end
-		print(block[overture:finale],end='',flush=True)
+		print(block[overture:finale],end='\n',flush=True)
+
+# System #################################################################################################################################################
+
+#Checks for windows system
+if (os.name == 'nt'):
+	from colorama import init
+	init()
+from termcolor import colored
+
+# Flags ##################################################################################################################################################
+
+blockFlag = ''		#If a result blocks is a:	-f phrase	-p paragraph			Default: everything
+infoFlag = ''		#Additional info:			-l line		-w words				Default: no info
+readFlag = ''		#How to read input:			-F file		-S stdin after EOF		Default: stdin, each line
+
+fg.argv = sys.argv[2:]
+blockFlag = fg.getFlags('-f','-p')
+infoFlag = fg.getFlags('-l','-w')
+readFlag = fg.getFlags('-F','-S')
+
+filePaths = fg.getFiles()
+
+# Match ##################################################################################################################################################
+
+match = sys.argv[1] if (len(sys.argv) >= 2) else ''
+
+if (blockFlag == '-f'):
+	blockMatch = r'[^\.:!?]*' + match + r'.*?(\.\.\.|[\.:!?])'		#matches all phrases with match
+elif(blockFlag == '-p'):
+	blockMatch = r'[^\n]*' + match + r'[^\n]*'						#matches all paragraphs with match
+else:
+	blockMatch = r'(.|\n)*' + match + r'(.|\n)*'					#matches all text with the match
+
+# Main ###################################################################################################################################################
 
 if (readFlag == '-F'):							# -F data is the file contents
 	for filePath in filePaths:
