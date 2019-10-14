@@ -4,6 +4,7 @@ import sys
 import os
 import flags as fg
 
+#checks for windows system
 if (os.name == 'nt'):
 	from colorama import init
 	init()
@@ -21,8 +22,6 @@ infoFlag = fg.getFlags('-l','-w')
 readFlag = fg.getFlags('-F','-S')
 
 filePaths = fg.getFiles()
-
-print(filePaths)
 
 printEnd=''
 
