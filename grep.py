@@ -2,21 +2,32 @@ import fileinput
 import re
 import sys
 import os
+import flags as fg
 
-if (os.name == 't'):
+if (os.name == 'nt'):
 	from colorama import init
 	init()
 
 from termcolor import colored
 
 
-blockFlag = '-p'	#If a result blocks is a:	-f phrase	-p paragraph			Default: everything
-infoFlag = '-l'		#Additional info:			-l line		-w words				Default: no info
-readFlag = '-'		#How to read input:			-F file		-S stdin after EOF		Default: stdin, each line
-filePath=''
+blockFlag = ''		#If a result blocks is a:	-f phrase	-p paragraph			Default: everything
+infoFlag = ''		#Additional info:			-l line		-w words				Default: no info
+readFlag = ''		#How to read input:			-F file		-S stdin after EOF		Default: stdin, each line
+
+fg.argv = sys.argv[2:]
+blockFlag = fg.getFlags('-f','-p')
+infoFlag = fg.getFlags('-l','-w')
+readFlag = fg.getFlags('-F','-S')
+
+filePaths = fg.getFiles()
+
+print(filePaths)
+
 printEnd=''
 
-match = 'netus'
+match = sys.argv[1] if (len(sys.argv) >= 2) else ''
+
 blockMatch = r'(.|\n)*' + match + r'(.|\n)*'						#matches all text with the match
 
 if (blockFlag == '-f'):
@@ -43,16 +54,20 @@ def grep(data):
 			print(block[overture:start],end=printEnd)
 			printC(block[start:end],'red')
 			overture = end
-		print(block[overture:finale],end='\n',flush=True)
+		print(block[overture:finale],end='',flush=True)
 
-if (readFlag == '-F'):						# -F data is the file contents
-	with open(filePath, 'r') as file:
-   		data = file.read()
-	grep(data)
-elif(readFlag == '-S'):						# -S data is all the stdin content until EOF
+if (readFlag == '-F'):							# -F data is the file contents
+	for filePath in filePaths:
+		try:
+			with open(filePath, 'r') as file:
+				data = file.read()
+				grep(data)
+		except:
+			pass
+elif(readFlag == '-S'):							# -S data is all the stdin content until EOF
 	for line in sys.stdin.readlines():
 		data += line
 	grep(data)
-else:										# each line is parsed thru grep at a time
+else:											# each line is parsed thru grep at a time
 	for line in sys.stdin:
 		grep(line)
