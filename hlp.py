@@ -26,3 +26,21 @@ def usage():
 
 def notEnoughArgs():
 	return "Error: Need more arguments\n\n"
+
+def noSearchOptions():
+	return "Reading each line from input:"
+
+def usingF():
+	return "Reading from file(s):"
+
+def usingS():
+	return "Reading from input until end of file:"
+
+def noOutputOptions():
+	return "Outputting whole text caught:"
+
+def usingf():
+	return "Outputting each phrase caught:"
+
+def usingp():
+	return "Outputting each paragraph caught:"
