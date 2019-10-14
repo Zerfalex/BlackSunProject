@@ -18,7 +18,7 @@ def usage():
 	text += "[SEARCH OPTIONS] - Seaches for pattern in stdin for each line if blank, else:\n"
 	text += "    [-S]         - Seaches for pattern in stdin, but only after end of file.\n"
 	text += "    [-F <files>] - Seaches for pattern in given files.\n\n"
-	text += "[OUTPUT OPTIONS] - Seaches for pattern in stdin for each line if blank, else:\n"
+	text += "[OUTPUT OPTIONS] - Outputs whole text with highlighted pattern if blank, else:\n"
 	text += "    [-f]         - Outputs each phrase the pattern is found on.\n"
 	text += "    [-p]         - Outputs each paragraph the pattern is found on.\n\n"
 
