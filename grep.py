@@ -3,8 +3,14 @@ import re
 import sys
 import os
 import flags as fg
+import hlp
 
 # Functions ##############################################################################################################################################
+
+#Checks if basic arguments are correct
+def checkSyntax():
+	if(len(sys.argv)<2):
+		sys.exit(hlp.notEnoughArgs() + hlp.fullHelp())
 
 #Prints colored text
 def printC(line,color, end=''):
@@ -29,13 +35,16 @@ def grep(data):
 			overture = end
 		print(block[overture:finale],end='\n',flush=True)
 
-# System #################################################################################################################################################
+# Checks #################################################################################################################################################
 
 #Checks for windows system
 if (os.name == 'nt'):
 	from colorama import init
 	init()
 from termcolor import colored
+
+#Checks for correct syntax
+checkSyntax()
 
 # Flags ##################################################################################################################################################
 
@@ -49,6 +58,10 @@ infoFlag = fg.getFlags('-l','-w')
 readFlag = fg.getFlags('-F','-S')
 
 filePaths = fg.getFiles()
+
+# Syntax #################################################################################################################################################
+
+
 
 # Match ##################################################################################################################################################
 
