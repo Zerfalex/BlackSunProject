@@ -8,9 +8,24 @@ import hlp
 # Functions ##############################################################################################################################################
 
 #Checks if basic arguments are correct
-def checkSyntax():
+def checkSyntax(blockFlag, infoFlag, readFlag):
 	if(len(sys.argv)<2):
 		sys.exit(hlp.notEnoughArgs() + hlp.fullHelp())
+	
+	if(readFlag==""):
+		print(hlp.noSearchOptions())
+	elif(readFlag=="-F"):
+		print(hlp.usingF())
+	elif(readFlag=="-S"):
+		print(hlp.usingS())
+
+	if(blockFlag==""):
+		print(hlp.noOutputOptions())
+	elif(blockFlag=="-f"):
+		print(hlp.usingf())
+	elif(blockFlag=="-p"):
+		print(hlp.usingp())
+
 
 #Prints colored text
 def printC(line,color, end=''):
@@ -33,16 +48,13 @@ def grep(data):
 			overture = end
 		print(block[overture:finale],end='\n',flush=True)
 
-# Checks #################################################################################################################################################
+# System #################################################################################################################################################
 
 #Checks for windows system
 if (os.name == 'nt'):
 	from colorama import init
 	init()
 from termcolor import colored
-
-#Checks for correct syntax
-checkSyntax()
 
 # Flags ##################################################################################################################################################
 
@@ -57,9 +69,8 @@ readFlag = fg.getFlags('-F','-S')
 
 filePaths = fg.getFiles()
 
-# Syntax #################################################################################################################################################
-
-
+#Checks for correct syntax
+checkSyntax(blockFlag, infoFlag, readFlag)
 
 # Match ##################################################################################################################################################
 
