@@ -16,7 +16,7 @@ def checkSyntax():
 def printC(line,color, end=''):
 	print(colored(line, color),end=end,flush=True)
 
-#Iterates thru a string 
+#Iterates thru a string
 def grep(data):
 	#Splits data by phrase, paragraph or gets the entire chunk
 	for result in re.finditer(blockMatch, data):
@@ -28,8 +28,6 @@ def grep(data):
 		for result in re.finditer(match, block):
 			start = result.start()
 			end = result.end()
-			if(block[overture] == ' '): #Removes initial space if it has one (looks better when printed)
-				overture += 1
 			print(block[overture:start],end='')
 			printC(block[start:end],'red')
 			overture = end
@@ -85,6 +83,7 @@ if (readFlag == '-F'):							# -F data is the file contents
 		except:
 			pass
 elif(readFlag == '-S'):							# -S data is all the stdin content until EOF
+	data = ''
 	for line in sys.stdin.readlines():
 		data += line
 	grep(data)
