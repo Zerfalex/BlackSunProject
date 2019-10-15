@@ -14,7 +14,7 @@ def explanation():
 def usage():
 	text =  'Program usage:\n'
 	text += 'grep.py [PATTERN] [SEARCH OPTIONS] [OUTPUT OPTIONS]\n\n'
-	text += '[PATTERN]    - A regular expression that will be searched.\n\n'
+	text += '[PATTERN]        - A regular expression that will be searched.\n\n'
 	text += '[SEARCH OPTIONS] - Seaches for pattern in stdin for each line if blank, else:\n'
 	text += '    [-S]         - Seaches for pattern in stdin, but only after end of file.\n'
 	text += '    [-F <files>] - Seaches for pattern in given files.\n\n'
