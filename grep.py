@@ -12,18 +12,18 @@ def checkSyntax(blockFlag, infoFlag, readFlag):
 	if(len(sys.argv)<2):
 		sys.exit(hlp.notEnoughArgs() + hlp.fullHelp())
 	
-	if(readFlag==""):
+	if(readFlag==''):
 		print(hlp.noSearchOptions())
-	elif(readFlag=="-F"):
+	elif(readFlag=='-F'):
 		print(hlp.usingF())
-	elif(readFlag=="-S"):
+	elif(readFlag=='-S'):
 		print(hlp.usingS())
 
-	if(blockFlag==""):
+	if(blockFlag==''):
 		print(hlp.noOutputOptions())
-	elif(blockFlag=="-f"):
+	elif(blockFlag=='-f'):
 		print(hlp.usingf())
-	elif(blockFlag=="-p"):
+	elif(blockFlag=='-p'):
 		print(hlp.usingp())
 
 
